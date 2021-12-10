@@ -1,0 +1,16 @@
+#sudo: required: Super user permisions
+language: generic 
+sudo: required
+# Le decimos a travis que para continuar necesitamos una copia 
+# de docker lista para correr
+services:
+    - docker
+# before_install: serie de diferentes comandos a ser ejecutados antes
+# de correr nuestras pruebas    
+before_install:
+    - docker build -t lbarahona96/docker-react-aws -f Dockerfile.dev .
+# Esta línea es para decirle a Travis los comandos que necesitan ser ejecutados
+# para correr las pruebas
+script:
+    - docker run -e CI=true lbarahona96/docker-react-aws npm run test -- --coverage
+        
